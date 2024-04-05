@@ -14,10 +14,11 @@ This benchmark aims to compare the performance of using MassTransit and MediatR 
 
 The benchmark results below showcase the performance comparison between MassTransit and MediatR in terms of execution time:
 
-| Method      | Mean        | Error     | StdDev      | Median      |
-|------------ |------------:|----------:|------------:|------------:|
-| MassTransit | 36,623.9 ns | 727.96 ns | 2,111.94 ns | 35,680.6 ns |
-| MediatR     |    161.1 ns |   3.24 ns |     3.47 ns |    160.3 ns |
+| Method         | Mean          | Error       | StdDev        |
+|--------------- |--------------:|------------:|--------------:|
+| MassTransit    | 45,239.173 ns | 926.7132 ns | 2,643.9649 ns |
+| MediatR        |    189.046 ns |   3.7602 ns |     5.5117 ns |
+| DirectResponse |      8.428 ns |   0.2015 ns |     0.3367 ns |
 
 **Legends:**
 - Mean   : Arithmetic mean of all measurements
