@@ -5,13 +5,9 @@ using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Validators;
 
-using IMediator = MassTransit.Mediator.IMediator;
-using MassTransit;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-
 using MediatorsBenchmark.MediatR;
 using MediatorsBenchmark.MassTransit;
+using MediatorsBenchmark.Services;
 
 namespace MediatorsBenchmark;
 
@@ -30,35 +26,11 @@ public class Program
     }
 
     [Benchmark]
-    public void MassTransit() => MassTransitMediator(new MassTransitRequest(_message));
+    public void MassTransit() => MediatorsService.MassTransitMediator(new MassTransitRequest(_message));
 
     [Benchmark]
-    public void MediatR() => MediatRMediator(new MediatRRequest(_message));
+    public void MediatR() => MediatorsService.MediatRMediator(new MediatRRequest(_message));
 
-    public static MassTransitResponse MassTransitMediator(MassTransitRequest request)
-    {
-        return _massTransitMediator.GetResponse<MassTransitResponse>(request).Result.Message;
-    }
-
-    public static MediatRResponse MediatRMediator(MediatRRequest request)
-    {
-        return _mediatRMediator.Send(request).Result;
-    }
-
-    private static readonly IRequestClient<MassTransitRequest> _massTransitMediator;
-    private static readonly ISender _mediatRMediator;
-    static Program()
-    {
-        IServiceCollection services = new ServiceCollection();
-
-        services
-            .AddMediator(cfg => cfg.AddConsumersFromNamespaceContaining<MassTransitConsumer>())
-            .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-        ServiceProvider serviceProvider = services.BuildServiceProvider();
-
-        IMediator mediator = serviceProvider.GetRequiredService<IMediator>();
-        _massTransitMediator = mediator.CreateRequestClient<MassTransitRequest>();
-
-        _mediatRMediator = serviceProvider.GetRequiredService<ISender>();
-    }
+    [Benchmark]
+    public void DirectResponse() => MediatorsService.Direct(new DirectRequest(_message));
 }
