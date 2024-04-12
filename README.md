@@ -14,17 +14,18 @@ This benchmark aims to compare the performance of using MassTransit and MediatR 
 
 The benchmark results below showcase the performance comparison between MassTransit and MediatR in terms of execution time:
 
-| Method         | Mean          | Error       | StdDev        |
-|--------------- |--------------:|------------:|--------------:|
-| MassTransit    | 45,239.173 ns | 926.7132 ns | 2,643.9649 ns |
-| MediatR        |    189.046 ns |   3.7602 ns |     5.5117 ns |
-| DirectResponse |      8.428 ns |   0.2015 ns |     0.3367 ns |
+| Method         | Mean         | Error        | StdDev       | Gen0   | Allocated |
+|--------------- |-------------:|-------------:|-------------:|-------:|----------:|
+| MassTransit    | 46,194.26 ns | 1,287.700 ns | 3,796.813 ns | 2.8687 |   11975 B |
+| MediatR        |    189.63 ns |     4.725 ns |    13.172 ns | 0.0861 |     360 B |
+| DirectResponse |     12.45 ns |     0.479 ns |     1.366 ns | 0.0115 |      48 B |
 
 **Legends:**
 - Mean   : Arithmetic mean of all measurements
 - Error  : Half of 99.9% confidence interval
 - StdDev : Standard deviation of all measurements
-- Median : Value separating the higher half of all measurements (50th percentile)
+- Gen0   : GC Generation 0 collects per 1000 operations
+- Allocated : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
 - 1 ns   : 1 Nanosecond (0.000000001 sec)
 
 ## Methodology

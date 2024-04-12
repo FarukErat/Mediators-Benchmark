@@ -11,6 +11,7 @@ using MediatorsBenchmark.Services;
 
 namespace MediatorsBenchmark;
 
+[MemoryDiagnoser]
 public class Program
 {
     private const string _message = "Hello, World!";
